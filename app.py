@@ -1,22 +1,23 @@
-import streamlit as st
-import joblib
 
-vectorizer = joblib.load("vectorizer.jb")
-model = joblib.load("lr_model.jb")
+from flask import Flask, request, jsonify
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-st.title("Fake News Detector")
-st.write("Enter a News Article below to check whether it is Fake or Real. ")
+app = Flask(__name__)
 
-inputn = st.text_area("News Article:","")
+# Load trained model & vectorizer
+model = pickle.load(open("model.pkl", "rb"))
+vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
 
-if st.button("Check News"):
-    if inputn.strip():
-        transform_input = vectorizer.transform([inputn])
-        prediction = model.predict(transform_input)
+@app.route("/predict", methods=["POST"])
+def predict():
+    data = request.json["text"]
+    transformed_text = vectorizer.transform([data])
+    prediction = model.predict(transformed_text)[0]
+    result = "Real" if prediction == 1 else "Fake"
+    return jsonify({"prediction": result})
 
-        if prediction[0] == 1:
-            st.success("The News is Real! ")
-        else:
-            st.error("The News is Fake! ")
-    else:
-        st.warning("Please enter some text to Analyze. ") 
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)
+
+
