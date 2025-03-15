@@ -4,12 +4,12 @@ import pickle
 import os
 import sys
 
-# Check if model and vectorizer exist
+
 if not os.path.exists("model.pkl") or not os.path.exists("vectorizer.pkl"):
     messagebox.showerror("Error", "Model or Vectorizer file not found! Ensure 'model.pkl' and 'vectorizer.pkl' exist.")
     sys.exit()
 
-# Load model and vectorizer
+
 try:
     with open("model.pkl", "rb") as model_file:
         model = pickle.load(model_file)
@@ -35,13 +35,12 @@ def predict_news():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
 
-# Initialize GUI
+
 root = tk.Tk()
 root.title("Fake News Detection System")
 root.geometry("600x500")
 root.configure(bg="#1e1e1e")
 
-# Styling
 style_bg = "#2a2a2a"
 style_fg = "#ffffff"
 style_btn_bg = "#00d9ff"
