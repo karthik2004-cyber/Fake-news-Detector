@@ -1,7 +1,5 @@
 flask
-gunicorn
-scikit-learn
-pandas
+gunicorn  
 numpy
-pickle
-tkinter
+pandas
+scikit-learn
