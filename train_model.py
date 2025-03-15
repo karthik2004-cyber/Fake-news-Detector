@@ -8,7 +8,7 @@ from sklearn.linear_model import PassiveAggressiveClassifier
 from sklearn.metrics import accuracy_score
 
 
-dataset_path = "fake_and_real_news.csv"
+dataset_path = "fake.csv"
 if not os.path.exists(dataset_path):
     raise FileNotFoundError(f"Error: Dataset file '{dataset_path}' not found!")
 
